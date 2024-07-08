@@ -4,18 +4,41 @@ on:
     branches:
       - development
       - main
-      - '*'
+      - 'feature/*'
+      - 'bug/*'
+      - 'hotfix/*'
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      uses: actions/setup-node@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
 
-      with:
-        node-version: 20
+      # - name: Setup npmrc
+      #   run: echo "//registry.npmjs.org/:_authToken=${{secrets.PAT}}" > .npmrc
+
+      # - name: Install Dependencies
+      #   run: npm ci
+
+      # - name: ESLint Check
+      #   run: npm run lint
+
+      # - name: Style Lint Check
+      #   run: npm run stylelint
+
+      # - name: Prettier Check
+      #   run: npm run prettier:check
+
+      # - name: Unit Test
+      #   run: npm run test
+
       run: npm ci
 
       run: npm test
